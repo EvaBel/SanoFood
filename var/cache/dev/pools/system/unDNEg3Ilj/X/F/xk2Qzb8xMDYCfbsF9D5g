@@ -1,0 +1,3 @@
+<?php //d5ade844e31c08fffdfbc1a00519864d
+
+return [PHP_INT_MAX, 'libraries/glightbox/js/glightbox.min.js'];

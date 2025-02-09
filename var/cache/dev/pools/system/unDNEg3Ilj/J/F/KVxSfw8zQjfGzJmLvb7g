@@ -1,0 +1,3 @@
+<?php //b790a7e47818a58af9aaba98db6ae894
+
+return [PHP_INT_MAX, 'libraries/aos/aos.js'];

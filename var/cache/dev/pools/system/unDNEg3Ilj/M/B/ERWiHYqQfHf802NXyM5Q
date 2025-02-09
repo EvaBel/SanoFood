@@ -1,0 +1,3 @@
+<?php //fc351702efba8852a4c40fc3f66c57f8
+
+return [PHP_INT_MAX, 'libraries/bootstrap-icons/bootstrap-icons.css'];
