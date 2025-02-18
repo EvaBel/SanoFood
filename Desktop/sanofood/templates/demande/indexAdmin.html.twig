@@ -1,0 +1,141 @@
+{% extends 'admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/kk.css') }}">
+    <!-- Ajoute FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Styles pour les boutons */
+        .btn-advise, .btn-respond, .btn-share {
+            border: none;
+            background: none;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Centrer le texte et l'icône verticalement */
+        }
+    
+        .btn-advise:hover, .btn-respond:hover, .btn-share:hover {
+            color: #1877f2; /* Couleur bleue Facebook */
+        }
+    
+        .btn-advise i, .btn-respond i, .btn-share i {
+            margin-right: 5px;
+        }
+    
+        /* Style pour la section des actions */
+        .demande-actions {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center; /* Centrer les boutons horizontalement */
+            gap: 20px; /* Espacement entre les boutons */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Gestion des demandes</h5>
+
+                            <!-- Formulaire de recherche -->
+                            <form action="{{ path('app_demande') }}" method="GET" class="mb-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Rechercher une demande par nom ou type..." value="{{ app.request.query.get('search') }}">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Rechercher
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- Fin du formulaire de recherche -->
+
+                            <!-- Liste verticale des demandes -->
+                            <div class="row">
+                                {% for demande in demande %}
+                                <div class="col-12 mb-4"> <!-- Chaque topic prend toute la largeur -->
+                                    <div class="card card-demande">
+                                        <div class="card-body">
+                                            <!-- Image de la demande -->
+                                            <div class="demande-image" style="background-image: url('https://via.placeholder.com/300');"></div>
+                                            <!-- Nom de la demande -->
+                                            <h5 class="demande-nom">{{ demande.nom }}</h5>
+                                            <!-- Information sur la demande -->
+                                            <p class="demande-type"><strong>Content :</strong> {{ demande.content }}</p>
+                                            <p class="demande-type"><strong>Email :</strong> {{ demande.email }}</p>
+                                            <p class="demande-type"><strong>Specialite :</strong> {{ demande.specialite }}</p>
+
+
+                                            <p class="demande-date"><strong>Date de plantation :</strong> {{ demande.dateInscription|date('d-m-Y') }}</p>
+                                            <!-- Boutons d'actions -->
+                                            <div class="demande-actions">
+                                                <!-- Boutons personnalisés -->
+                                                
+                                                <form action="{{ path('conseiller', {'id': demande.id}) }}" method="commande">
+                                                    <button type="submit" class="btn btn-advise">Conseiller</button>
+                                                </form>
+                                                
+                                                <button class="btn btn-share">
+                                                    <i class="fas fa-share"></i> Partager
+                                                </button>
+                                                <a class="btn cur-p btn-danger" href="{{ path('delete_demande', {'id': demande.id}) }}">Supprimer</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="col-12">
+                                    <div class="alert alert-info" role="alert">
+                                        Aucune demande trouvée.
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <!-- Fin de la liste verticale -->
+
+                            <!-- Pagination -->
+                            {% if demande|length > 0 %}
+                            <div class="pagination justify-content-center mt-4">
+                                <ul class="pagination">
+                                    <!-- Lien "Précédent" -->
+                                    {% if previous is defined and previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('app_demande') }}?page={{ previous }}&search={{ app.request.query.get('search') }}">Précédent</a>
+                                        </li>
+                                    {% endif %}
+                                    <!-- Page actuelle -->
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ currentPage }}</span>
+                                    </li>
+                                    <!-- Lien "Suivant" -->
+                                    {% if next is defined and next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('app_demande') }}?page={{ next }}&search={{ app.request.query.get('search') }}">Suivant</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <!-- Indicateur de page -->
+                            <div class="text-center mt-2">
+                                Page {{ currentPage }} sur {{ demande.getPageCount() }}
+                            </div>
+                            {% endif %}
+                            <!-- Fin de la pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
