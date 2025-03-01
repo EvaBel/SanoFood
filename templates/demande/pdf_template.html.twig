@@ -1,0 +1,14 @@
+
+{% block title %}Demande PDF{% endblock %}
+
+{% block body %}
+    <div style="text-align: center;">
+        <h1>📄 Demande Details</h1>
+        <hr>
+        <h2>{{ demande.nom }}</h2>
+        <p><strong>📌 Contenu:</strong> {{ demande.content }}</p>
+        <p><strong>📧 Email:</strong> {{ demande.email }}</p>
+        <p><strong>🛠 Spécialité:</strong> {{ demande.specialite }}</p>
+        <p><strong>📅 Date:</strong> {{ demande.dateInscription|date('d-m-Y') }}</p>
+    </div>
+{% endblock %}

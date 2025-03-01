@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        /* Centered form container */
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 30px auto;
+        }
+
+        /* Custom button styling */
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            width: 100%;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .form-control {
+            border-radius: 6px;
+        }
+
+        /* Display form errors */
+        .form-error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <h4 class="text-center mb-3">📌 Remplissez le formulaire</h4>
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} {# Disabling HTML5 validation #}
+
+                    <div class="form-group">
+                        {{ form_label(form.nom) }}
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Votre Nom'}}) }}
+                        <div class="form-error">{{ form_errors(form.nom) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.content) }}
+                        {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Content'}}) }}
+                        <div class="form-error">{{ form_errors(form.content) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                        <div class="form-error">{{ form_errors(form.email) }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.specialite) }}
+                        {{ form_widget(form.specialite, {'attr': {'class': 'form-control', 'placeholder': 'Spécialité'}}) }}
+                        <div class="form-error">{{ form_errors(form.specialite) }}</div>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-custom">Envoyer la demande</button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

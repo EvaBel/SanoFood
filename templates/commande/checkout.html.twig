@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}🎉 Commande Confirmée{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .checkout-success {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .checkout-success h2 {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .checkout-success p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .progress-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::before {
+            content: "";
+            position: absolute;
+            width: 70%;
+            height: 100%;
+            background: #28a745;
+            border-radius: 5px;
+        }
+
+        .progress-text {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="checkout-success">
+        <h2>🎉 Merci pour votre commande !</h2>
+        <p>Votre commande a été reçue avec succès et est en cours de traitement.</p>
+
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+            <p class="progress-text">📦 Préparation en cours...</p>
+        </div>
+
+        <p>votre confirmation vous sera envoyé sous peu. 📧</p>
+
+    </div>
+{% endblock %}

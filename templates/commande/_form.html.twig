@@ -1,0 +1,74 @@
+
+    <style>
+        /* Form Styling */
+        .form-container {
+            max-width: 600px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        /* Error Handling */
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .invalid-feedback {
+            display: block;
+            font-size: 14px;
+            color: #dc3545;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: 0.3s;
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="form-container">
+            <h2 class="form-title">📝 {{ form.vars.value.id ? 'Modifier' : 'Ajouter' }} une Commande</h2>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {% for field in form %}
+                <div class="mb-3">
+                    {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(field, {'attr': {'class': 'form-control' ~ (field.vars.errors|length > 0 ? ' is-invalid' : '') }}) }}
+
+                    {% if field.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ field.vars.errors|first.message }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-save"></i> {{ button_label|default('Enregistrer') }}
+            </button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+

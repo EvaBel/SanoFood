@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/kk.css') }}">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Custom Styles */
+        .btn-action {
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .btn-eye {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-eye:hover {
+            background-color: #495057;
+        }
+
+        .btn-update {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background-color: #218838;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-action i {
+            margin-right: 6px;
+        }
+
+        .demande-card {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .demande-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+
+        .pagination .page-link {
+            color: #007bff;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4 text-center">📌 Gestion des Demandes</h5>
+
+                                <!-- Search Form -->
+                                <form action="{{ path('app_demande') }}" method="GET" class="mb-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="search" placeholder="Rechercher une demande..." value="{{ app.request.query.get('search') }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-search"></i> Rechercher
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- List of Requests -->
+                                <div class="row">
+                                    {% for demande in demande %}
+                                        <div class="col-md-6 mb-4">
+                                            <div class="demande-card">
+                                                <!-- Name of the Request -->
+                                                <h5 class="demande-nom">{{ demande.nom }}</h5>
+
+                                                <!-- Info -->
+                                                <p class="demande-type"><strong>Content:</strong> {{ demande.content }}</p>
+                                                <p class="demande-type"><strong>Email:</strong> {{ demande.email }}</p>
+                                                <p class="demande-type"><strong>Spécialité:</strong> {{ demande.specialite }}</p>
+                                                <p class="demande-date"><strong>Date:</strong> {{ demande.dateInscription|date('d-m-Y') }}</p>
+
+                                                <!-- Actions -->
+                                                <div class="d-flex justify-content-between mt-3">
+                                                    <!-- 👁️ View Conseil Button -->
+                                                    <a href="{{ path('app_conseil', {'id': demande.id}) }}" class="btn-action btn-eye">
+                                                        <i class="fas fa-eye"></i> Voir les Conseils
+                                                    </a>
+
+                                                    <!-- ✏️ Update Button -->
+                                                    <a href="{{ path('update_demande', {'id': demande.id}) }}" class="btn-action btn-update">
+                                                        <i class="fas fa-edit"></i> Modifier
+                                                    </a>
+
+                                                    <!-- 🗑️ Delete Button -->
+                                                    <a href="{{ path('delete_demande', {'id': demande.id}) }}" class="btn-action btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')">
+                                                        <i class="fas fa-trash"></i> Supprimer
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-12">
+                                            <div class="alert alert-info text-center" role="alert">
+                                                ❗ Aucune demande trouvée.
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Pagination -->
+                                {% if demande|length > 0 %}
+                                    <div class="pagination justify-content-center mt-4">
+                                        <ul class="pagination">
+                                            {% if previous is defined and previous %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ path('app_demande') }}?page={{ previous }}&search={{ app.request.query.get('search') }}">Précédent</a>
+                                                </li>
+                                            {% endif %}
+                                            <li class="page-item active">
+                                                <span class="page-link">{{ currentPage }}</span>
+                                            </li>
+                                            {% if next is defined and next %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ path('app_demande') }}?page={{ next }}&search={{ app.request.query.get('search') }}">Suivant</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+
+                                    <!-- Page Count -->
+                                    <div class="text-center mt-2">
+                                        Page {{ currentPage }} sur {{ demande.getPageCount() }}
+                                    </div>
+                                {% endif %}
+                                <!-- End Pagination -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

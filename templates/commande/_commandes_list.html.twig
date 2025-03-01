@@ -1,0 +1,23 @@
+<div class="row">
+    {% if commandes|length > 0 %}
+        {% for commande in commandes %}
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Commande #{{ commande.id }}</h5>
+                        <p><strong>📅 Date:</strong> {{ commande.dateCreation|date('Y-m-d') }}</p>
+                        <p><strong>📍 Adresse:</strong> {{ commande.deliveryAddress }}</p>
+                        <p><strong>☎️ Contact:</strong> {{ commande.phone }}</p>
+                        <p><strong>💰 Montant:</strong> {{ commande.totalPrice }} TND</p>
+
+                        <a href="{{ path('app_livraison_new', {'commandeId': commande.id}) }}" class="btn btn-primary w-100">
+                            📦 Ajouter une Livraisonaaaa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-danger">❌ Aucune commande trouvée.</p>
+    {% endif %}
+</div>

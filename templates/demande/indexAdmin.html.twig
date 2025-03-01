@@ -1,0 +1,180 @@
+{% extends 'admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/kk.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .card-demande {
+            border: none;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-demande:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .demande-content {
+            padding: 20px;
+            background: #fff;
+        }
+
+        .demande-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            background: #f8f9fa;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-advise {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-advise:hover {
+            background: #218838;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title mb-4 text-center">📌 Gestion des Demandes</h4>
+
+                                <!-- ✅ Search Input (No Form Submission) -->
+                                <div class="mb-4">
+                                    <input type="text" id="search-input" class="form-control" placeholder="🔍 Rechercher une demande...">
+                                </div>
+
+                                <!-- ✅ Demand List Container (Will Be Updated with AJAX) -->
+                                <div class="row" id="demandes-container">
+                                    {% for demande in demande %}
+                                        <div class="col-md-6 col-lg-4 mb-4">
+                                            <div class="card card-demande">
+                                                <div class="demande-content">
+                                                    <h5 class="demande-nom">{{ demande.nom }}</h5>
+                                                    <p><strong>📌 Contenu:</strong> {{ demande.content }}</p>
+                                                    <p><strong>📧 Email:</strong> {{ demande.email }}</p>
+                                                    <p><strong>🛠 Spécialité:</strong> {{ demande.specialite }}</p>
+                                                    <p><strong>📅 Date:</strong> {{ demande.dateInscription|date('d-m-Y') }}</p>
+                                                </div>
+                                                <div class="demande-actions">
+                                                    <a href="{{ path('ajouter_conseilbydemande', {'id': demande.id}) }}" class="btn btn-primary">
+                                                        <i class="fas fa-lightbulb"></i> Ajouter un Conseil
+                                                    </a>
+                                                    <a class="btn btn-secondary btn-action" href="{{ path('app_demandeAdmin_pdf', {'id': demande.id}) }}">
+                                                        <i class="fas fa-file-pdf"></i> Télécharger PDF
+                                                    </a>
+                                                    <a class="btn btn-action btn-delete" href="{{ path('delete_demande', {'id': demande.id}) }}">
+                                                        <i class="fas fa-trash"></i> Supprimer
+                                                    </a>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-12">
+                                            <div class="alert alert-info text-center">
+                                                📌 Aucune demande trouvée.
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ AJAX Script for Live Search -->
+    <script>
+        document.getElementById("search-input").addEventListener("input", function () {
+            let searchQuery = this.value.trim();
+
+            fetch(`/demande/search?search=${encodeURIComponent(searchQuery)}`, {
+                headers: { "X-Requested-With": "XMLHttpRequest" }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let demandesContainer = document.getElementById("demandes-container");
+                    demandesContainer.innerHTML = ""; // Clear current results
+
+                    if (data.demandes.length > 0) {
+                        data.demandes.forEach(demande => {
+                            let demandeHTML = `
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card card-demande">
+                            <div class="demande-content">
+                                <h5 class="demande-nom">${demande.nom}</h5>
+                                <p><strong>📌 Contenu:</strong> ${demande.content}</p>
+                                <p><strong>📧 Email:</strong> ${demande.email}</p>
+                                <p><strong>🛠 Spécialité:</strong> ${demande.specialite}</p>
+                                <p><strong>📅 Date:</strong> ${demande.dateInscription}</p>
+                            </div>
+                            <div class="demande-actions">
+                                <a href="/demande/${demande.id}/ajouter-conseil" class="btn btn-action btn-advise">
+                                    <i class="fas fa-lightbulb"></i> Ajouter Conseil
+                                </a>
+                                <a class="btn btn-action btn-delete" href="/delete_demande/${demande.id}">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </a>
+                                 <a class="btn btn-action btn-delete" href="/pdf/${demande.id}">
+                                    <i class="fas fa-trash"></i> pdf
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                            demandesContainer.innerHTML += demandeHTML;
+                        });
+                    } else {
+                        demandesContainer.innerHTML = `<div class="col-12">
+                <div class="alert alert-info text-center">
+                    📌 Aucune demande trouvée.
+                </div>
+            </div>`;
+                    }
+                })
+                .catch(error => console.error("❌ Erreur de recherche:", error));
+        });
+
+
+    </script>
+{% endblock %}

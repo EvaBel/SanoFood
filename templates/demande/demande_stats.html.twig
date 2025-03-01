@@ -1,0 +1,172 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}📊 Statistiques des Demandes et Conseils{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .stats-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="stats-container">
+        <h2>📊 Statistiques des Demandes et Conseils</h2>
+
+        <!-- 🔹 Bar Chart: Top Demandes with Most Conseils -->
+        <div class="chart-container">
+            <h3>🏆 Demandes avec le Plus de Conseils</h3>
+            <canvas id="topDemandesChart"></canvas>
+        </div>
+
+        <!-- 🔹 Pie Chart: Ratio of Demandes with & Without Conseils -->
+        <div class="chart-container">
+            <h3>📌 Ratio Demandes avec/sans Conseils</h3>
+            <canvas id="ratioDemandesChart"></canvas>
+        </div>
+
+        <!-- 🔹 Line Chart: Conseils Over Time -->
+        <div class="chart-container">
+            <h3>📅 Évolution des Conseils au Fil du Temps</h3>
+            <canvas id="conseilTimelineChart"></canvas>
+        </div>
+
+        <br>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            try {
+                // ✅ Bar Chart - Demandes avec le Plus de Conseils
+                let demandeLabels = {{ stats|map(s => s.demandeContent)|json_encode()|raw }};
+                let conseilsCount = {{ stats|map(s => s.totalConseils)|json_encode()|raw }};
+
+                console.log("🚀 Labels for Bar Chart:", demandeLabels);
+                console.log("📊 Data for Bar Chart:", conseilsCount);
+
+                if (demandeLabels.length > 0 && conseilsCount.length > 0) {
+                    new Chart(document.getElementById("topDemandesChart"), {
+                        type: 'bar',
+                        data: {
+                            labels: demandeLabels.map(label => label.length > 30 ? label.substring(0, 30) + '...' : label),
+                            datasets: [{
+                                label: "Nombre de Conseils",
+                                backgroundColor: "#36A2EB",
+                                data: conseilsCount
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        maxRotation: 0,
+                                        minRotation: 0,
+                                        autoSkip: false,
+                                        callback: function (value, index, values) {
+                                            return demandeLabels[index].length > 30 ? demandeLabels[index].substring(0, 30) + '...' : demandeLabels[index];
+                                        }
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    console.warn("⚠️ No data available for Bar Chart.");
+                }
+            } catch (error) {
+                console.error("❌ Error in Bar Chart:", error);
+            }
+
+            try {
+                // ✅ Pie Chart - Ratio Demandes avec / sans Conseils
+                let totalDemandes = {{ ratio.totalDemandes }};
+                let demandesAvecConseils = {{ ratio.demandesAvecConseils }};
+                let demandesSansConseils = totalDemandes - demandesAvecConseils;
+
+                console.log("📌 Total Demandes:", totalDemandes);
+
+                if (totalDemandes > 0) {
+                    new Chart(document.getElementById("ratioDemandesChart"), {
+                        type: 'pie',
+                        data: {
+                            labels: ["Avec Conseils", "Sans Conseils"],
+                            datasets: [{
+                                backgroundColor: ["#4CAF50", "#FF6384"],
+                                data: [demandesAvecConseils, demandesSansConseils]
+                            }]
+                        },
+                        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                    });
+                } else {
+                    console.warn("⚠️ No data available for Pie Chart.");
+                }
+            } catch (error) {
+                console.error("❌ Error in Pie Chart:", error);
+            }
+
+            try {
+                // ✅ Line Chart - Évolution des Conseils
+                let timelineDates = {{ timeline|map(t => t.conseilDate)|json_encode()|raw }};
+                let conseilsOverTime = {{ timeline|map(t => t.total)|json_encode()|raw }};
+
+                console.log("✅ Conseils Timeline:", conseilsOverTime);
+
+                if (timelineDates.length > 0 && conseilsOverTime.length > 0) {
+                    new Chart(document.getElementById("conseilTimelineChart"), {
+                        type: 'line',
+                        data: {
+                            labels: timelineDates,
+                            datasets: [{
+                                label: "Conseils Donnés",
+                                borderColor: "#8E44AD",
+                                backgroundColor: "rgba(142, 68, 173, 0.2)",
+                                data: conseilsOverTime
+                            }]
+                        },
+                        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                    });
+                } else {
+                    console.warn("⚠️ No data available for Line Chart.");
+                }
+            } catch (error) {
+                console.error("❌ Error in Line Chart:", error);
+            }
+        });
+
+    </script>
+
+{% endblock %}

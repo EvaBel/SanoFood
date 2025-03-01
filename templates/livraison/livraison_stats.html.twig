@@ -1,0 +1,70 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}📊 Statistiques des Livreurs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .stats-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="stats-container">
+        <h2>🏆 Top 5 Livreurs (Nombre de Livraisons)</h2>
+
+        <canvas id="topLivreursChart"></canvas>
+        <br>
+        <a href="{{ path('app_livraison_index') }}" class="back-btn">🔙 Retour</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let livreurNames = {{ topLivreurs|map(l => l.livreur)|json_encode()|raw }};
+            let livraisonCounts = {{ topLivreurs|map(l => l.totalLivraisons)|json_encode()|raw }};
+
+            let ctx = document.getElementById("topLivreursChart").getContext("2d");
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: livreurNames,
+                    datasets: [{
+                        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#8E44AD"],
+                        data: livraisonCounts
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}🛒 Mon Panier{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .cart-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .cart-total {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            padding: 10px;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            background: #c82333;
+        }
+
+        .btn-checkout {
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-checkout:hover {
+            background: #218838;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="cart-container">
+        <h2 class="text-center">🛒 Votre Panier</h2>
+
+        {% if commandes|length > 0 %}
+            {% for commande in commandes %}
+                <div class="cart-item">
+                    <!-- Product Image (Default Placeholder) -->
+
+                    <div class="cart-info">
+                        <h5>Commande #{{ commande.id }}</h5>
+                        <p><strong>Date:</strong> {{ commande.dateCreation|date('d-m-Y H:i') }}</p>
+                        <p><strong>Statut:</strong> {{ commande.status }}</p>
+                        <p><strong>Adresse:</strong> {{ commande.deliveryAddress }}</p>
+                        <p><strong>Téléphone:</strong> {{ commande.phone }}</p>
+                    </div>
+
+                    <div class="cart-price">
+                        <h4>{{ commande.totalPrice }} €</h4>
+                        <form method="post" action="{{ path('app_commande_deletepanier', {'id': commande.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
+                            <button type="submit" class="btn-remove">❌ Retirer</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!-- Cart Total & Checkout Button -->
+            <div class="cart-total">
+                <p>Total: <strong>{{ totalPrice }} €</strong></p>
+                <a href="{{ path('app_checkoutt') }}" class="btn-checkout">✅ Passer la Commande</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h4>🛒 Votre panier est vide.</h4>
+                <p>Ajoutez des articles pour voir votre panier ici.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

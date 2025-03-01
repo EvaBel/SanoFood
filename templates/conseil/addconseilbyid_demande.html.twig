@@ -1,0 +1,25 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2 class="text-center">📝 Ajouter un Conseilllll</h2>
+
+        <div class="card p-4 shadow">
+            {{ form_start(form) }}
+            <div class="form-group mb-3">
+                <label for="contenu">Contenu du Conseil</label>
+                {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="dateConseil">Date</label>
+                {{ form_widget(form.dateConseil, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
