@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/kk.css') }}">
+    <style>
+        .card-conseil {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card-conseil:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-back:hover {
+            background-color: #495057;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2 class="text-center">📌 Conseils pour "{{ demande.nom }}"</h2>
+
+        <a href="{{ path('app_demande') }}" class="btn-back d-inline-flex align-items-center mb-3">
+            <i class="fas fa-arrow-left me-2"></i> Retour aux Demandes
+        </a>
+
+        <div class="row">
+            {% for conseil in conseils %}
+                <div class="col-md-6 mb-4">
+                    <div class="card card-conseil">
+                        <div class="card-body">
+                            <h5 class="card-title">📝 Conseil #{{ loop.index }}</h5>
+                            <p class="card-text"><strong>Contenu:</strong> {{ conseil.contenu }}</p>
+                            <p class="card-text"><strong>Date:</strong> {{ conseil.dateConseil|date('d-m-Y H:i') }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        ❗ Aucun conseil disponible pour cette demande.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

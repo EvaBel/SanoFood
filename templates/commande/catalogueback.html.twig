@@ -1,0 +1,65 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}📦 Catalogue des Commandes{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">📦 Catalogue des Commandes</h2>
+
+        <!-- 🔍 Search Input -->
+        <div class="mb-4">
+            <input type="text" id="search" class="form-control" placeholder="🔍 Rechercher par adresse, téléphone ou statut...">
+        </div>
+
+        <!-- 📦 Commandes List (This will be updated dynamically) -->
+        <div id="commandes-list">
+            {% include 'commande/_commandes_list.html.twig' %}
+        </div>
+    </div>
+
+    <!-- ✅ Live Search JavaScript -->
+    <script>
+        document.getElementById("search").addEventListener("input", function() {
+            let query = this.value.trim();
+
+            fetch("{{ path('app_commande_search') }}?q=" + encodeURIComponent(query))
+                .then(response => response.json()) // ✅ Expect JSON response
+                .then(data => {
+                    let container = document.getElementById("commandes-list");
+                    container.innerHTML = ""; // ✅ Clear old results
+
+                    if (!data.success || data.commandes.length === 0) {
+                        container.innerHTML = '<p class="text-center text-danger">❌ Aucune commande trouvée.</p>';
+                        return;
+                    }
+
+                    // ✅ Render new results
+                    data.commandes.forEach(commande => {
+                        let card = `
+                    <div class="col-md-4">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Commande #${commande.id}</h5>
+                                <p><strong>📅 Date:</strong> ${commande.dateCreation}</p>
+                                <p><strong>📍 Adresse:</strong> ${commande.deliveryAddress}</p>
+                                <p><strong>☎️ Contact:</strong> ${commande.phone}</p>
+                                <p><strong>💰 Montant:</strong> ${commande.totalPrice} TND</p>
+                                <a href="/livraison/new/${commande.id}" class="btn btn-primary w-100">
+                                    📦 Ajouter une Livraison
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                        container.innerHTML += card;
+                    });
+                })
+                .catch(error => {
+                    console.error("❌ Erreur AJAX:", error);
+                    document.getElementById("commandes-list").innerHTML = '<p class="text-center text-danger">❌ Erreur lors du chargement.</p>';
+                });
+        });
+
+
+    </script>
+{% endblock %}

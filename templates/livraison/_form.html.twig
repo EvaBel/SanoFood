@@ -1,0 +1,121 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<div class="container p-4 shadow rounded bg-light">
+    <h4 class="mb-3 text-center">🚚 Ajouter / Modifier une Livraison</h4>
+
+    <!-- ✅ Global Form Errors -->
+    {% if form_errors(form) %}
+        <div class="alert alert-danger">
+            <strong>Veuillez corriger les erreurs ci-dessous :</strong>
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    <!-- ✅ Date de Livraison -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">📅 Date de Livraison</label>
+        {{ form_widget(form.dateLivraison, {'attr': {'class': 'form-control'}}) }}
+        {% if form_errors(form.dateLivraison) %}
+            <div class="text-danger small">
+                {{ form_errors(form.dateLivraison) }}
+            </div>
+        {% else %}
+            <div class="text-muted small">Sélectionnez une date valide.</div>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Statut -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">🚚 Statut de Livraison</label>
+        {{ form_widget(form.statut, {'attr': {'class': 'form-select'}}) }}
+        {% if form_errors(form.statut) %}
+            <div class="text-danger small">
+                {{ form_errors(form.statut) }}
+            </div>
+        {% else %}
+            <div class="text-muted small">Choisissez le statut de la livraison: En attente, En cours, Livré, Annulé.</div>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Livreur -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">👤 Nom du Livreur</label>
+        {{ form_widget(form.livreur, {'attr': {'class': 'form-control'}}) }}
+        {% if form_errors(form.livreur) %}
+            <div class="text-danger small">
+                {{ form_errors(form.livreur) }}
+            </div>
+        {% else %}
+            <div class="text-muted small">Entrez le nom du livreur.</div>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Téléphone du Livreur -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">📞 Téléphone du Livreur</label>
+        {{ form_widget(form.livreurPhone, {'attr': {'class': 'form-control'}}) }}
+        {% if form_errors(form.livreurPhone) %}
+            <div class="text-danger small">
+                {{ form_errors(form.livreurPhone) }}
+            </div>
+        {% else %}
+            <div class="text-muted small">Exemple : +216 99 123 456.</div>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Numéro de Suivi -->
+    <div class="mb-3">
+        <label class="form-label fw-bold">🔍 Numéro de Suivi</label>
+        {{ form_widget(form.trackingNumber, {'attr': {'class': 'form-control'}}) }}
+        {% if form_errors(form.trackingNumber) %}
+            <div class="text-danger small">
+                {{ form_errors(form.trackingNumber) }}
+            </div>
+        {% else %}
+            <div class="text-muted small">Ex: LIV-123ABC456.</div>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Commande Associée -->
+
+
+    <!-- ✅ Submit Button -->
+    <div class="text-end">
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-save"></i> {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+<!-- ✅ JavaScript Validation -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("form").addEventListener("submit", function (event) {
+            let errors = [];
+            let livreur = document.querySelector("[name='livraison[livreur]']");
+            let livreurPhone = document.querySelector("[name='livraison[livreurPhone]']");
+            let trackingNumber = document.querySelector("[name='livraison[trackingNumber]']");
+
+            if (!livreur.value.trim()) {
+                errors.push("Le nom du livreur est obligatoire.");
+            }
+
+            if (!livreurPhone.value.trim()) {
+                errors.push("Le numéro de téléphone du livreur est obligatoire.");
+            } else if (!/^[0-9+]+$/.test(livreurPhone.value)) {
+                errors.push("Le numéro de téléphone est invalide.");
+            }
+
+            if (!trackingNumber.value.trim()) {
+                errors.push("Le numéro de suivi est requis.");
+            }
+
+            if (errors.length > 0) {
+                event.preventDefault();
+                alert("🚨 Erreurs détectées :\n\n" + errors.join("\n"));
+            }
+        });
+    });
+</script>

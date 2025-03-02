@@ -1,0 +1,130 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}📦 Détails de la Commande{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Container Styling */
+        .commande-container {
+            max-width: 800px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        .commande-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #babdc2;
+        }
+
+        /* Table Styling */
+        .table {
+            width: 100%;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: #9ba5af;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Action Buttons */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-action {
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-back {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #545b62;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="commande-container">
+            <h2 class="commande-title">📦 Détails de la Commande</h2>
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Date de Création</th>
+                    <td>{{ commande.dateCreation ? commande.dateCreation|date('d-m-Y H:i:s') : 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Statut</th>
+                    <td>{{ commande.status }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse de Livraison</th>
+                    <td>{{ commande.deliveryAddress }}</td>
+                </tr>
+                <tr>
+                    <th>Téléphone</th>
+                    <td>{{ commande.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Méthode de Paiement</th>
+                    <td>{{ commande.paymentMethod }}</td>
+                </tr>
+                <tr>
+                    <th>Prix Total</th>
+                    <td>{{ commande.totalPrice }} €</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="btn-container">
+                <a href="{{ path('app_commande_index') }}" class="btn-action btn-back">⬅️ Retour</a>
+                <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-action btn-edit">✏️ Modifier</a>
+                {{ include('commande/_delete_form.html.twig', { 'button_label': '🗑 Supprimer' }) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

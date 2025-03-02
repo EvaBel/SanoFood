@@ -1,0 +1,147 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}📦 Gestion des Commandes{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Custom Table Styles */
+        .table {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        tbody tr {
+            transition: background 0.3s ease-in-out;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Action Buttons */
+        .btn-custom {
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-view {
+            background-color: #28a745;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+
+        .btn-view:hover {
+            background-color: #218838;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        /* Custom Add Button */
+        .btn-add {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 8px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-add:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">📦 Gestion des Commandes</h1>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date de Création</th>
+                    <th>Statut</th>
+                    <th>Adresse de Livraison</th>
+                    <th>Téléphone</th>
+                    <th>Mode de Paiement</th>
+                    <th>Prix Total</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.dateCreation ? commande.dateCreation|date('d-m-Y H:i') : '' }}</td>
+                        <td>
+                            {% if commande.status == 'Livrée' %}
+                                <span class="badge bg-success">{{ commande.status }}</span>
+                            {% elseif commande.status == 'Expédiée' %}
+                                <span class="badge bg-primary">{{ commande.status }}</span>
+                            {% elseif commande.status == 'Préparée' %}
+                                <span class="badge bg-warning text-dark">{{ commande.status }}</span>
+                            {% elseif commande.status == 'Annulée' %}
+                                <span class="badge bg-danger">{{ commande.status }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ commande.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ commande.deliveryAddress }}</td>
+                        <td>{{ commande.phone }}</td>
+                        <td>{{ commande.paymentMethod }}</td>
+                        <td><strong>{{ commande.totalPrice }}€</strong></td>
+                        <td>
+                            <a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn-custom btn-view">
+                                <i class="fas fa-eye"></i> Voir
+                            </a>
+                            <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-custom btn-edit">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+
+                            <a href="{{ path('app_commande_pdf', {'id': commande.id}) }}" class="btn-custom btn-view">
+                                <i class="fas fa-edit"></i> pdf
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">📌 Aucune commande trouvée.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_commande_new') }}" class="btn-add">
+                <i class="fas fa-plus-circle"></i> Ajouter une Commande
+            </a>
+        </div>
+    </div>
+{% endblock %}

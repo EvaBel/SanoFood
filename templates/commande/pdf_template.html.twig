@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande #{{ commande.id }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { text-align: center; color: #333; }
+        .container { border: 1px solid #ddd; padding: 20px; }
+        .details { margin-bottom: 20px; }
+        .details p { font-size: 14px; }
+        .footer { text-align: center; font-size: 12px; color: #555; margin-top: 20px; }
+    </style>
+</head>
+<body>
+<h1>📦 Détails de la Commande</h1>
+<div class="container">
+    <div class="details">
+        <p><strong>🆔 ID:</strong> {{ commande.id }}</p>
+        <p><strong>📅 Date:</strong> {{ commande.dateCreation|date('d-m-Y') }}</p>
+        <p><strong>📍 Adresse de Livraison:</strong> {{ commande.deliveryAddress }}</p>
+        <p><strong>☎️ Téléphone:</strong> {{ commande.phone }}</p>
+        <p><strong>💰 Total:</strong> {{ commande.totalPrice }} TND</p>
+        <p><strong>🔵 Statut:</strong> {{ commande.status }}</p>
+    </div>
+</div>
+<div class="footer">
+    <p>Merci pour votre commande! 🛍️</p>
+</div>
+</body>
+</html>

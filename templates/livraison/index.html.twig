@@ -1,0 +1,154 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}🚚 Gestion des Livraisons{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* 🟢 Container Styling */
+        .livraison-container {
+            max-width: 950px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        .livraison-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* 🟢 Table Styling */
+        .table {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .table th {
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .table td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* 🟢 Action Buttons */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn-action {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-add:hover {
+            background: #218838;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800;
+        }
+
+        .btn-show {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-show:hover {
+            background: #0056b3;
+        }
+
+        /* 🟢 Icons Styling */
+        .btn-action i {
+            font-size: 14px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="livraison-container">
+            <h2 class="livraison-title">🚚 Gestion des Livraisons</h2>
+            <div class="text-center mt-3">
+                <a href="{{ path('app_livraison_stats') }}" class="btn btn-primary">📊 Voir les Statistiques</a>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Date de Livraison</th>
+                    <th>Statut</th>
+                    <th>Livreur</th>
+                    <th>Téléphone</th>
+                    <th>Tracking</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for livraison in livraisons %}
+                    <tr>
+                        <td>{{ livraison.dateLivraison ? livraison.dateLivraison|date('d-m-Y H:i:s') : 'N/A' }}</td>
+                        <td>{{ livraison.statut }}</td>
+                        <td>{{ livraison.livreur }}</td>
+                        <td>{{ livraison.livreurPhone }}</td>
+                        <td>{{ livraison.trackingNumber }}</td>
+                        <td>
+                            <a href="{{ path('app_livraison_show', {'id': livraison.id}) }}" class="btn-action btn-show">👁 Voir</a>
+                            <a href="{{ path('app_livraison_edit', {'id': livraison.id}) }}" class="btn-action btn-edit">✏ Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">Aucune livraison trouvée.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-center mt-3">
+            </div>
+        </div>
+    </div>
+{% endblock %}
