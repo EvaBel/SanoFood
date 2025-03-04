@@ -327,6 +327,6 @@ class __TwigTemplate_23a05bd6e262277a4ab337d6500bd0e2 extends Template
         {{- form_rest(form) -}}
     </table>
 {%- endblock form_widget_compound -%}
-", "form_table_layout.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\uhh\\SanoFood\\vendor\\symfony\\twig-bridge\\Resources\\views\\Form\\form_table_layout.html.twig");
+", "form_table_layout.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\main\\SanoFood\\vendor\\symfony\\twig-bridge\\Resources\\views\\Form\\form_table_layout.html.twig");
     }
 }

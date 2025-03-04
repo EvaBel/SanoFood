@@ -71,6 +71,6 @@ class __TwigTemplate_57a23954776338b5945f279c71f9a012 extends Template
 
     public function getSourceContext(): Source
     {
-        return new Source("", "admin.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\uhh\\SanoFood\\templates\\admin.html.twig");
+        return new Source("", "admin.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\main\\SanoFood\\templates\\admin.html.twig");
     }
 }

@@ -174,6 +174,6 @@ class __TwigTemplate_f358ead77aec07583a30fc187ce0ab22 extends Template
       </div>
     
 {% endblock %}
-", "nutrition/index.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\uhh\\SanoFood\\templates\\nutrition\\index.html.twig");
+", "nutrition/index.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\main\\SanoFood\\templates\\nutrition\\index.html.twig");
     }
 }

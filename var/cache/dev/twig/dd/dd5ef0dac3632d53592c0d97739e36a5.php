@@ -514,6 +514,6 @@ class __TwigTemplate_2d24a949b171c6be0012c1a2385bafe2 extends Template
 </body>
 
 </html>
-", "base.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\uhh\\SanoFood\\templates\\base.html.twig");
+", "base.html.twig", "C:\\Users\\alexg\\OneDrive\\Documents\\pi\\main\\SanoFood\\templates\\base.html.twig");
     }
 }

@@ -20,7 +20,13 @@ return [
     'form_show' => [[], ['_controller' => 'App\\Controller\\AjoutController::showForm'], [], [['text', '/form']], [], [], []],
     'form_submit' => [[], ['_controller' => 'App\\Controller\\AjoutController::handleSubmit'], [], [['text', '/form/submit']], [], [], []],
     'app_nutrition' => [[], ['_controller' => 'App\\Controller\\NutritionController::index'], [], [['text', '/nutrition']], [], [], []],
+    'app_register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::edit'], [], [['text', '/edit']], [], [], []],
+    'app_login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
+    'app_logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
     'App\Controller\AjoutController::showForm' => [[], ['_controller' => 'App\\Controller\\AjoutController::showForm'], [], [['text', '/form']], [], [], []],
     'App\Controller\AjoutController::handleSubmit' => [[], ['_controller' => 'App\\Controller\\AjoutController::handleSubmit'], [], [['text', '/form/submit']], [], [], []],
     'App\Controller\NutritionController::index' => [[], ['_controller' => 'App\\Controller\\NutritionController::index'], [], [['text', '/nutrition']], [], [], []],
+    'App\Controller\RegistrationController::register' => [[], ['_controller' => 'App\\Controller\\RegistrationController::edit'], [], [['text', '/edit']], [], [], []],
+    'App\Controller\SecurityController::login' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], [], []],
+    'App\Controller\SecurityController::logout' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], [], []],
 ];

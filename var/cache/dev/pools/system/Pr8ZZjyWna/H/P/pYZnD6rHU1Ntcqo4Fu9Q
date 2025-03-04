@@ -1,0 +1,3 @@
+<?php //4df26dc2cdc0b336950339a59c21f545
+
+return [PHP_INT_MAX, 'libraries/bootstrap/js/bootstrap.bundle.min.js'];

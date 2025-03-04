@@ -1,0 +1,3 @@
+<?php //0e61b1147f818bea68b3d8beaf013aa4
+
+return [PHP_INT_MAX, 'libraries/swiper/swiper-bundle.min.js'];
