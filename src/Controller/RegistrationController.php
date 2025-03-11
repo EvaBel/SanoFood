@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form,
         ]);
     }
-    #[Route('/edit', name: 'app_register')]
+    #[Route('/edit', name: 'app_edit')]
     public function edit(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
