@@ -13,8 +13,8 @@ public class MainFx extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Commande+livraison/CommandeClient.fxml"));
-            //bnseba lelcommade wlivraison             Parent root = FXMLLoader.load(getClass()".getResource("/Commande+livraison/CommandeClient.fxml"));hedhi lel admin  wlokhra leluser eli houwa livreur
+            Parent root = FXMLLoader.load(getClass().getResource("/Conseil+Demande/Conseil.fxml"));
+            //bnseba lelcommade wlivraison             Parent root = FXMLLoader.load(getClass().getResource("/Commande+livraison/CommandeClient.fxml"));hedhi lel admin  wlokhra leluser eli houwa livreur
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Ajouter");
