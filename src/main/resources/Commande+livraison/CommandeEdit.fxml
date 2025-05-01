@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="20" styleClass="form-wrapper" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Commande_et_livrasion.CommandeEditController">
+
+    <padding>
+        <Insets bottom="30" left="40" right="40" top="30" />
+    </padding>
+
+    <Label fx:id="titleLabel" styleClass="form-title" text="📝 Modifier Commande" />
+
+    <VBox spacing="15">
+
+        <!-- User ID -->
+        <Label styleClass="input-label" text="👤 ID Utilisateur" />
+        <TextField fx:id="userIdField" promptText="ID utilisateur" styleClass="input-field" />
+
+        <!-- Date -->
+        <Label fx:id="dateCreationLabel" styleClass="input-label" text="Date: N/A" />
+
+        <!-- Statut -->
+        <Label styleClass="input-label" text="📦 Statut" />
+        <ComboBox fx:id="statusComboBox" promptText="Statut" styleClass="input-field" />
+
+        <!-- Adresse -->
+        <Label styleClass="input-label" text="📍 Adresse de livraison" />
+        <TextField fx:id="deliveryAddressField" promptText="Adresse complète" styleClass="input-field" />
+
+        <!-- Téléphone -->
+        <Label styleClass="input-label" text="📞 Téléphone" />
+        <TextField fx:id="phoneField" promptText="Numéro à 8 chiffres" styleClass="input-field" />
+
+        <!-- Paiement -->
+        <Label styleClass="input-label" text="💳 Méthode de paiement" />
+        <TextField fx:id="paymentMethodField" promptText="Ex: Espèces, Carte..." styleClass="input-field" />
+
+        <!-- Prix total -->
+        <Label styleClass="input-label" text="💰 Total (TND)" />
+        <TextField fx:id="totalPriceField" promptText="Prix total" styleClass="input-field" />
+
+        <!-- Livraison -->
+        <Label styleClass="input-label" text="🚚 Livraison" />
+        <ComboBox fx:id="deliveryIdField" promptText="Sélectionner livraison" styleClass="input-field" />
+
+        <!-- Errors -->
+        <Label fx:id="errorLabel" styleClass="error-label" />
+    </VBox>
+
+    <!-- Buttons -->
+    <HBox alignment="CENTER_RIGHT" spacing="15">
+        <Button fx:id="submitButton" onAction="#handleSubmit" styleClass="btn-orange" text="✅ Modifier" />
+    </HBox>
+</VBox>
