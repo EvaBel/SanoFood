@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="580" prefWidth="320" spacing="20" styleClass="form-wrapper"
+      stylesheets="@../styles/styles.css"
+      xmlns="http://javafx.com/javafx/20.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.Conseil_et_demande.DemandeAddController">
+
+    <padding><Insets bottom="20" left="20" right="20" top="20"/></padding>
+
+    <Label styleClass="form-title" text="📋 Ajouter une Nouvelle Demande"/>
+
+    <VBox spacing="10">
+
+        <Label styleClass="input-label" text="👤 Nom"/>
+        <TextField fx:id="nomField" promptText="Nom (3-50 caractères)" styleClass="input-field"/>
+        <Label fx:id="nomError" styleClass="error-label"/>
+
+        <Label styleClass="input-label" text="✍️ Contenu"/>
+        <TextField fx:id="contentField" promptText="Contenu (10-500 caractères)" styleClass="input-field"/>
+        <Label fx:id="contentError" styleClass="error-label"/>
+
+        <Label styleClass="input-label" text="📅 Date"/>
+        <DatePicker fx:id="dateField" promptText="Sélectionner une date" styleClass="input-field"/>
+        <Label fx:id="dateError" styleClass="error-label"/>
+
+        <Label styleClass="input-label" text="🆔 Auteur ID"/>
+        <TextField fx:id="authorIdField" promptText="Auteur ID (optionnel, max 9999)" styleClass="input-field"/>
+        <Label fx:id="authorIdError" styleClass="error-label"/>
+
+        <Label styleClass="input-label" text="📧 Email"/>
+        <TextField fx:id="emailField" promptText="Email (ex. user@domain.com)" styleClass="input-field"/>
+        <Label fx:id="emailError" styleClass="error-label"/>
+
+        <Label styleClass="input-label" text="💼 Spécialité"/>
+        <TextField fx:id="specialiteField" promptText="Spécialité (3-50 caractères)" styleClass="input-field"/>
+        <Label fx:id="specialiteError" styleClass="error-label"/>
+    </VBox>
+
+    <HBox alignment="CENTER_RIGHT" spacing="15">
+        <Button fx:id="submitButton" onAction="#handleSubmit" styleClass="btn-orange" text="✅ Ajouter"/>
+        <Button onAction="#cancel" styleClass="btn-grey" text="❌ Annuler"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter livraison{% endblock %}
+
+{% block body %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section light-background">
+            <div class="container">
+                <div class="row gy-4 justify-content-center justify-content-lg-between">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-center mb-4">Ajouter une livraison</h4>
+                                
+                                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                                <div class="form-group mb-3">
+                                    <label>{{ form_label(form.commande) }}</label>
+                                    {{ form_widget(form.commande, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label>{{ form_label(form.adresse) }}</label>
+                                    {{ form_widget(form.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Adresse de livraison'}}) }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label>{{ form_label(form.prix) }}</label>
+                                    {{ form_widget(form.prix, {'attr': {'class': 'form-control', 'min': 1, 'max': 100000000}}) }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label>{{ form_label(form.statut) }}</label>
+                                    {{ form_widget(form.statut, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label>{{ form_label(form.created) }}</label>
+                                    {{ form_widget(form.created, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+
+                                
+
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /Hero Section -->
+    </main>
+{% endblock %}

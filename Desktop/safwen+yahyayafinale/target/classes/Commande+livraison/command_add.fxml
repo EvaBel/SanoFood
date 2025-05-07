@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="25" styleClass="form-wrapper" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Commande_et_livrasion.commande_add">
+
+    <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>
+
+    <Label styleClass="form-title" text="🛒 Ajouter une Nouvelle Commande" />
+
+    <VBox spacing="15">
+
+        <!-- Adresse -->
+        <Label styleClass="input-label" text="📍 Adresse" />
+        <TextField fx:id="deliveryAddressField" promptText="Adresse complète" styleClass="input-field" />
+        <Label fx:id="addressError" styleClass="error-label" />
+
+        <!-- Téléphone -->
+        <Label styleClass="input-label" text="📞 Téléphone" />
+        <TextField fx:id="phoneField" promptText="Numéro à 8 chiffres" styleClass="input-field" />
+        <Label fx:id="phoneError" styleClass="error-label" />
+
+        <!-- Paiement -->
+        <Label styleClass="input-label" text="💳 Méthode de paiement" />
+        <ComboBox fx:id="paymentMethodCombo" promptText="Choisir une méthode" styleClass="input-field" />
+        <Label fx:id="paymentError" styleClass="error-label" />
+
+        <!-- Prix total -->
+        <Label styleClass="input-label" text="💰 Total (DT)" />
+        <TextField fx:id="totalPriceField" promptText="Ex: 59.90" styleClass="input-field" />
+        <Label fx:id="priceError" styleClass="error-label" />
+
+        <!-- ID Livraison -->
+        <!-- ID Livraison -->
+        <Label styleClass="input-label" text="🚚 Livraison (optionnelle)" />
+        <ComboBox fx:id="deliveryComboBox" promptText="Sélectionner une livraison" styleClass="input-field" />
+        <Label fx:id="deliveryIdError" styleClass="error-label" />
+
+
+    </VBox>
+
+    <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 10 0 0 0;">
+        <Button onAction="#handleAddCommande" styleClass="btn-orange" text="✅ Ajouter" />
+        <Button onAction="#cancel" styleClass="btn-grey" text="❌ Annuler" />
+    </HBox>
+</VBox>

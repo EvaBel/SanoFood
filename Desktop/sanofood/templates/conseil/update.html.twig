@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="card form-container">
+            <div class="card-header bg-primary text-white text-center">
+                <h3>Modifier un Conseil</h3>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.contenu, 'Contenu du Conseil') }}
+                    {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre conseil ici...'}}) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.dateConseil, 'Date du Conseil') }}
+                    {{ form_widget(form.dateConseil, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form_label(form.demande, 'Demande Associée') }}
+                    {{ form_widget(form.demande, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Modifier</button>
+                    <a href="{{ path('app_conseil') }}" class="btn btn-secondary">Retour</a>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

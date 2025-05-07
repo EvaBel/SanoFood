@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des Conseils</h1>
+    <a href="{{ path('add_conseil') }}" class="btn btn-success">Ajouter un Conseil</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Contenu</th>
+                <th>Date Conseil</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for conseil in conseils %}
+                <tr>
+                    <td>{{ conseil.idC }}</td>
+                    <td>{{ conseil.contenu }}</td>
+                    <td>{{ conseil.dateConseil|date('Y-m-d H:i:s') }}</td>
+                    <td>
+                        <a href="{{ path('update_conseil', {'idC': conseil.idC}) }}" class="btn btn-primary">Modifier</a>
+                        <a href="{{ path('delete_conseil', {'idC': conseil.idC}) }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun conseil trouvé</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

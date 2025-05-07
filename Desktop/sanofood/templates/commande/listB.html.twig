@@ -1,0 +1,81 @@
+{% extends 'admin.html.twig' %}
+
+{% block  body%}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Liste des commande</h5>
+
+                            <!-- Formulaire de recherche -->
+                            <form action="{{ path('afficher_commande') }}" method="GET">
+                                <div class="form-group">
+                                    <label for="search">Rechercher par titre ou total :</label>
+                                    <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </form>
+                            <!-- Fin du formulaire de recherche -->
+
+                            <!-- Tableau des commande filtrées -->
+                            {% for recl in Commande %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-subtitle mb-2 text-muted">Nom: {{ recl.titre }}</h5>
+                                    <h7 class="card-subtitle mb-2 text-muted">Créé le: {{ recl.datecreation|date('d-m-Y') }}</h7>
+                                    <p class="card-text">total: {{ recl.total }}</p>
+                                    <img src="{{ asset('uploads/images/' ~ recl.image) }}" style="width:80px; height:80px;" />
+                                    
+                                    <!-- Formulaire d'envoi de message -->
+                                    <!-- Bouton Update -->
+                                    <a href="{{ path('update_ab', {'id': recl.id}) }}" class="btn btn-warning">Modifier</a>
+
+                                    <!-- Bouton Delete -->
+                                    <form action="{{ path('delete_ab', {'id': recl.id}) }}" method="post" class="d-inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
+
+                                    <div class="btn-group" role="group" aria-label="Actions">
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- Fin du tableau des commande filtrées -->
+
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                {% set currentPage = Commande.currentPageNumber %}
+                                {% set previous = currentPage > 1 ? currentPage - 1 : false %}
+                                {% set next = currentPage < Commande.pageCount ? currentPage + 1 : false %}
+                                <ul class="pagination">
+                                    {% if previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('afficher_commandeAdmin') }}?page={{ previous }}">Précédent</a>
+                                        </li>
+                                    {% endif %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ currentPage }}</span>
+                                    </li>
+                                    {% if next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('afficher_commandeAdmin') }}?page={{ next }}">Suivant</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <!-- Fin de la pagination -->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

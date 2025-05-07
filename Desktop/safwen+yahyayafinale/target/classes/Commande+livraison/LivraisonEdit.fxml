@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="810.0" prefWidth="302.0" spacing="15" styleClass="form-wrapper" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Commande_et_livrasion.LivraisonEditController">
+
+    <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+
+    <Label fx:id="titleLabel" styleClass="form-title" text="✏️ Modifier Livraison" />
+
+    <VBox spacing="10">
+
+        <!-- Commande ID -->
+        <Label styleClass="input-label" text="🛒 Commande ID" />
+        <TextField fx:id="commandeIdField" disable="true" promptText="Commande ID" styleClass="input-field" />
+        <Label styleClass="error-label" />
+
+        <!-- Date de livraison -->
+        <Label styleClass="input-label" text="📅 Date de livraison" />
+        <DatePicker fx:id="dateLivraisonPicker" promptText="Date de livraison" styleClass="input-field" />
+        <Label styleClass="error-label" />
+
+        <!-- Statut -->
+        <Label styleClass="input-label" text="📊 Statut" />
+        <ComboBox fx:id="statutComboBox" promptText="Statut" styleClass="input-field" />
+        <Label styleClass="error-label" />
+
+        <!-- Livreur -->
+        <Label styleClass="input-label" text="👤 Nom du livreur" />
+        <TextField fx:id="livreurField" promptText="Nom du livreur" styleClass="input-field" />
+        <Label styleClass="error-label" />
+
+        <!-- Téléphone -->
+        <Label styleClass="input-label" text="📞 Téléphone du livreur" />
+        <TextField fx:id="livreurPhoneField" promptText="Téléphone du livreur" styleClass="input-field" />
+        <Label styleClass="error-label" />
+
+        <!-- Numéro de suivi -->
+        <Label styleClass="input-label" text="🔍 Numéro de suivi" />
+        <TextField fx:id="trackingField" promptText="Numéro de suivi" styleClass="input-field" />
+        <Label styleClass="error-label" />
+
+    </VBox>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 5 0 0 0;">
+        <Button fx:id="submitButton" onAction="#handleSubmit" styleClass="btn-orange" text="✅ Modifier" />
+        <Button onAction="#cancel" styleClass="btn-grey" text="❌ Annuler" />
+    </HBox>
+
+    <Label fx:id="errorLabel" styleClass="error-label" />
+
+</VBox>

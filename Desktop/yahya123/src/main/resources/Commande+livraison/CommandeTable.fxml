@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.CommandeTableController"
+            styleClass="main-container" stylesheets="@/styles/styles.css">
+
+    <!-- Main Content -->
+    <VBox spacing="15" style="-fx-background-color: #F4F6FA; -fx-padding: 15;"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <!-- Filter Bar -->
+        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-background-radius: 5; -fx-padding: 12;">
+            <effect>
+                <DropShadow radius="5" spread="0.2" color="rgba(0,0,0,0.1)"/>
+            </effect>
+            <Label text="RECHERCHER" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+            <TextField fx:id="searchField" promptText="Adresse/Téléphone" onKeyReleased="#filterCommandes"
+                       style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;" prefWidth="150"/>
+            <Label text="STATUT" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="statusFilter" onAction="#filterCommandes" style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;" prefWidth="120">
+                <effect><InnerShadow radius="2" color="rgba(0,0,0,0.1)"/></effect>
+            </ComboBox>
+            <Label text="MÉTHODE PAIEMENT" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="paymentMethodFilter" onAction="#filterCommandes" style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;" prefWidth="120">
+                <effect><InnerShadow radius="2" color="rgba(0,0,0,0.1)"/></effect>
+            </ComboBox>
+            <Label text="DATE CRÉATION" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+            <DatePicker fx:id="minDateFilter" onAction="#filterCommandes" style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;" prefWidth="120"/>
+            <DatePicker fx:id="maxDateFilter" onAction="#filterCommandes" style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;" prefWidth="120"/>
+            <Label text="PRIX TOTAL" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+            <TextField fx:id="minPriceFilter" promptText="Min" onKeyReleased="#filterCommandes"
+                       style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;" prefWidth="80"/>
+            <TextField fx:id="maxPriceFilter" promptText="Max" onKeyReleased="#filterCommandes"
+                       style="-fx-background-color: #ecf0f1; -fx-background-radius: 4; -fx-prompt-text-fill: #7f8c8d; -fx-padding: 5;" prefWidth="80"/>
+            <Label text="TRIER" style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="sortFilter" onAction="#filterCommandes" style="-fx-background-color: #ecf0f1; -fx-background-radius: 4;" prefWidth="120">
+                <effect><InnerShadow radius="2" color="rgba(0,0,0,0.1)"/></effect>
+            </ComboBox>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button fx:id="viewAddressesButton" text="Voir Adresses" onAction="#showAddressesOnMap"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 5 10;" prefWidth="120">
+                <effect><DropShadow radius="3" spread="0.2" color="rgba(0,0,0,0.1)"/></effect>
+            </Button>
+            <Button fx:id="exportCsvButton" onAction="#exportToCSV" styleClass="icon-add-button">
+                <graphic>
+                    <ImageView fitWidth="24" fitHeight="24" preserveRatio="true">
+                        <image><Image url="@/assets/img.png" /></image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <!-- Table -->
+        <TableView fx:id="commandesTable" style="-fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="60" style="-fx-alignment: CENTER;"/>
+                <TableColumn fx:id="userIdColumn" text="USER ID" prefWidth="80" style="-fx-alignment: CENTER;"/>
+                <TableColumn fx:id="dateCreationColumn" text="DATE CRÉATION" prefWidth="120"/>
+                <TableColumn fx:id="statusColumn" text="STATUT" prefWidth="100"/>
+                <TableColumn fx:id="deliveryAddressColumn" text="ADRESSE LIVRAISON" prefWidth="150"/>
+                <TableColumn fx:id="phoneColumn" text="TÉLÉPHONE" prefWidth="100"/>
+                <TableColumn fx:id="paymentMethodColumn" text="PAIEMENT" prefWidth="100"/>
+                <TableColumn fx:id="totalPriceColumn" text="PRIX TOTAL" prefWidth="100" style="-fx-alignment: CENTER_RIGHT;"/>
+                <TableColumn fx:id="deliveryIdColumn" text="LIVRAISON ID" prefWidth="80" style="-fx-alignment: CENTER;"/>
+            </columns>
+        </TableView>
+
+        <!-- Charts -->
+        <HBox spacing="20" style="-fx-padding: 15;">
+            <VBox style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #dfe6e9; -fx-border-radius: 8; -fx-padding: 15;" prefWidth="350">
+                <Label text="Répartition par Statut" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-padding: 0 0 10 0;"/>
+                <PieChart fx:id="statusPieChart" prefHeight="250"/>
+                <Label text="Montre la distribution des commandes par statut." style="-fx-font-size: 12; -fx-text-fill: #636e72; -fx-padding: 10 0 0 0; -fx-wrap-text: true;"/>
+            </VBox>
+            <VBox style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #dfe6e9; -fx-border-radius: 8; -fx-padding: 15;" prefWidth="350">
+                <Label text="Commandes par Date" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-padding: 0 0 10 0;"/>
+                <BarChart fx:id="dateBarChart" prefHeight="250">
+                    <xAxis><CategoryAxis fx:id="dateXAxis" label="Date"/></xAxis>
+                    <yAxis><NumberAxis fx:id="dateYAxis" label="Nombre de Commandes"/></yAxis>
+                </BarChart>
+                <Label text="Affiche le nombre de commandes par date de création." style="-fx-font-size: 12; -fx-text-fill: #636e72; -fx-padding: 10 0 0 0; -fx-wrap-text: true;"/>
+            </VBox>
+            <VBox style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #dfe6e9; -fx-border-radius: 8; -fx-padding: 15;" prefWidth="350">
+                <Label text="Montant Total par Statut" style="-fx-font-weight: bold; -fx-font-size: 16; -fx-padding: 0 0 10 0;"/>
+                <BarChart fx:id="totalPriceBarChart" prefHeight="250">
+                    <xAxis><CategoryAxis fx:id="priceXAxis" label="Statut"/></xAxis>
+                    <yAxis><NumberAxis fx:id="priceYAxis" label="Montant Total"/></yAxis>
+                </BarChart>
+                <Label text="Affiche le montant total des commandes par statut." style="-fx-font-size: 12; -fx-text-fill: #636e72; -fx-padding: 10 0 0 0; -fx-wrap-text: true;"/>
+            </VBox>
+        </HBox>
+    </VBox>
+</AnchorPane>
