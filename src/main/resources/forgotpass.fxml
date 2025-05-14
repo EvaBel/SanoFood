@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sanofood.controllers.Forgotpass">
+   <children>
+      <TextField fx:id="email" layoutX="225.0" layoutY="143.0" promptText="email" />
+      <Text layoutX="225.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="Enter your email" wrappingWidth="149.60000000000014" />
+      <Button fx:id="verifyButton" layoutX="225.0" layoutY="200.0"
+              onAction="#handleVerifyButton" text="Verify Email" />
+      <TextField fx:id="codeField" layoutX="225.0" layoutY="250.0"
+                 promptText="Enter verification code" visible="false" />
+      <PasswordField fx:id="newPasswordField" layoutX="225.0" layoutY="300.0"
+                     promptText="Enter new password" visible="false" />
+      <Button fx:id="resetButton" layoutX="225.0" layoutY="350.0"
+              onAction="#handleResetPassword" text="Reset Password" visible="false" />
+   </children>
+</AnchorPane>

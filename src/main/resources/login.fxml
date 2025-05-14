@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pass" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sanofood.controllers.Login">
+   <children>
+      <TextField fx:id="email" layoutX="202.0" layoutY="128.0" promptText="email" />
+      <PasswordField fx:id="password" layoutX="202.0" layoutY="174.0" promptText="password" />
+      <Button fx:id="loginButton" layoutX="202.0" layoutY="219.0"
+              onAction="#handleLogin" text="Login" />
+      <Button layoutX="277.0" layoutY="219.0"
+              onAction="#goToPass" text="Forgot password?" />
+   </children>
+</AnchorPane>
