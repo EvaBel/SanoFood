@@ -7,6 +7,7 @@
 Elle permet :
 - La gestion des commandes et des livraisons
 - Le suivi nutritionnel personnalisé
+- La gestion des repas (ajout, modification, suppression, visualisation) 
 - L’analyse statistique avec export CSV
 - Une interface desktop (JavaFX) pour les administrateurs
 - Une interface web pour les utilisateurs finaux
@@ -98,6 +99,6 @@ Vous êtes libre de l'utiliser, de le modifier et de le redistribuer dans les co
 ## ✨ Remerciements
 
 Projet réalisé dans le cadre de l’année universitaire **2024–2025**.  
-Développé par : *[yahya ghezayel , safwen bechewch ]*  
+Développé par : *[yahya ghezayel , safwen bechewch,sarra laabidi ]*  
 Encadré par : *[mohamed ali charfedine]*  
 Hébergé grâce au pack **GitHub Education**.
